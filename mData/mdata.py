@@ -19,16 +19,21 @@ class Multi_Data(Data):
     """
     def __init__(
             self, 
-            n_graphs, 
-            node_features,
-            edge_indexs,
-            n_nodes,
-            y):
+            n_graphs=None, 
+            node_features=None,
+            edge_indexs=None,
+            n_nodes=None,
+            y=None):
         super().__init__()
-        for i in range(n_graphs):
-            setattr(self, f'edge_index_{i}', edge_indexs[i])
-            setattr(self, f'h_{i}', node_features[i])
-            setattr(self, f'n_nodes_{i}', n_nodes[i])
+        if n_graphs is None:
+            setattr(self, f'edge_index', None)
+            setattr(self, f'h', None)
+            setattr(self, f'n_nodes', None)
+        else:
+            for i in range(n_graphs):
+                setattr(self, f'edge_index_{i}', edge_indexs[i])
+                setattr(self, f'h_{i}', node_features[i])
+                setattr(self, f'n_nodes_{i}', n_nodes[i])
 
         self.y = y
 
@@ -53,19 +58,22 @@ class Multi_Coord_Data(Multi_Data):
     """
     def __init__(
             self,
-            n_graphs, 
-            node_features,
-            coordinates,
-            edge_indexs,
-            n_nodes,
-            y):
+            n_graphs=None, 
+            node_features=None,
+            coordinates=None,
+            edge_indexs=None,
+            n_nodes=None,
+            y=None):
         super().__init__(
-            n_graphs, 
-            node_features,
-            edge_indexs,
-            n_nodes,
-            y
+            n_graphs=n_graphs, 
+            node_features=node_features,
+            edge_indexs=edge_indexs,
+            n_nodes=n_nodes,
+            y=y
         )
-        for i in range(n_graphs):
-            setattr(self, f'x_{i}', coordinates[i])
+        if n_graphs is None:
+            setattr(self, f'x', None)
+        else:
+            for i in range(n_graphs):
+                setattr(self, f'x_{i}', coordinates[i])
 
